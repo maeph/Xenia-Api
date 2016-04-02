@@ -8,6 +8,7 @@ import pl.jug.torun.xenia.model.json.PrizeDTO
 import spock.lang.Specification
 
 import static org.mockito.Mockito.verify
+import static org.mockito.Mockito.verifyNoMoreInteractions
 import static org.mockito.Mockito.when
 import static org.mockito.MockitoAnnotations.initMocks
 
@@ -36,13 +37,16 @@ class ImportEventsServiceTest extends Specification {
 
         then:
 
-        1 * prizeRepository.save(*_) >> {arguments ->
+        verify(prizeRepository).save([new Prize(id: "01", name: "Prize1", producer: "Producer1", sponsorName: "Sponsor1", imageUrl: "http://example.com/image1.png"),
+                                  new Prize(id: "02", name: "Prize2", producer: "Producer2", sponsorName: "Sponsor2", imageUrl: "http://example.com/image2.png")] as Set)
+
+        1 * prizeRepository.save({arguments ->
             def prizes = arguments[0] as Set
             def expectedPrizes = [new Prize(id: "01", name: "Prize1", producer: "Producer1", sponsorName: "Sponsor1", imageUrl: "http://example.com/image1.png"),
                                   new Prize(id: "02", name: "Prize2", producer: "Producer2", sponsorName: "Sponsor2", imageUrl: "http://example.com/image2.png")] as Set
 
-            assert expectedPrizes == prizes
-        }
+            expectedPrizes == prizes
+        })
 
 
     }
