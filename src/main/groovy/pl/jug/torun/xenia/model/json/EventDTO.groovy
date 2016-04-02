@@ -6,5 +6,4 @@ package pl.jug.torun.xenia.model.json
 class EventDTO {
     String meetupId
     List<GiveAwayDTO> giveaways
-
 }
