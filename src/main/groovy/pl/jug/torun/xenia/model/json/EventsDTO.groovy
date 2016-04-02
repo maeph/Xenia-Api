@@ -4,7 +4,4 @@ class EventsDTO {
     List<PrizeDTO> prizes
     List<EventDTO> events
 
-    EventsDTO(List<PrizeDTO> prizes) {
-        this.prizes = prizes
-    }
 }
