@@ -84,5 +84,8 @@ class EventsController {
                 meetupMember
             } else meetupMemberRepository.save(it) 
         }.member
+
+
+
     }
 }

@@ -3,6 +3,7 @@ package pl.jug.torun.xenia.model
 import org.hibernate.annotations.Type
 import org.joda.time.LocalDateTime
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
 
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -33,15 +34,18 @@ class Event {
     
     @ManyToMany
     List<Member> attendees
-    
+
+    @Deprecated
     @CreatedDate
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     LocalDateTime startDate
-    
+
+    @Deprecated
     @CreatedDate
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     LocalDateTime endDate
 
+    @LastModifiedDate
     @Column(nullable = false)
     LocalDateTime updatedAt
 
