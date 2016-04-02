@@ -1,15 +1,19 @@
 {
+  "prize": [
+    {
+      "id":"ldifjsdf-fsdw4r",
+      "name": "IntelliJ",
+      "producer": "JetBrains",
+      "sponsorName": "JetBrains",
+      "imageUrl":"http://logonoid.com/images/intellij-idea-logo.png"
+    }
+  ],
   "events": [
     {
       "meetupId":"dkasldkf",
       "giveaways": [
         {
-          "prize": {
-            "name": "IntelliJ",
-            "producer": "JetBrains",
-            "sponsorName": "JetBrains",
-            "imageUrl":"http://logonoid.com/images/intellij-idea-logo.png"
-          },
+          "prizeId": "ldifjsdf-fsdw4r",
           "amount": 2,
           "draws": [
             {
