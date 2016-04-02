@@ -13,7 +13,6 @@ import pl.jug.torun.xenia.model.json.PrizeDTO
  */
 class ExportEventService {
 
-
     final EventRepository eventRepository
     final PrizeRepository prizeRepository
 
@@ -34,7 +33,7 @@ class ExportEventService {
 
         List<Prize> prizeList = prizeRepository.findAll()
 
-        def prizeDTO = prizeList.collect{
+        def prizeDTOs = prizeList.collect {
             new PrizeDTO(
                     id: it.id,
                     name: it.name,
@@ -43,8 +42,7 @@ class ExportEventService {
                     sponsorName: it.sponsorName
             )
         }
-        EventsDTO eventsDTO = new EventsDTO(prizeDTO)
-
+        EventsDTO eventsDTO = new EventsDTO(prizes: prizeDTOs)
 
         eventsDTO
     }
