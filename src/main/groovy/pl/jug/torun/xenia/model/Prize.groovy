@@ -1,9 +1,10 @@
 package pl.jug.torun.xenia.model
 
+import org.hibernate.annotations.GenericGenerator
+
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
 
 /**
@@ -11,6 +12,10 @@ import javax.persistence.Id
  */
 @Entity
 class Prize {
+
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(columnDefinition = "char(32)")
     @Id
     String id;
 

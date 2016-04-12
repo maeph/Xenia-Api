@@ -18,7 +18,7 @@ public class PrizeController {
     PrizeRepository prizeRepository
 
     @RequestMapping(value = '/{id}', method = RequestMethod.GET)
-    PrizeResponse get(@PathVariable('id') long id) {
+    PrizeResponse get(@PathVariable('id') String id) {
         Prize prize = prizeRepository.getOne(id)
         return new PrizeResponse(prize)
     }
