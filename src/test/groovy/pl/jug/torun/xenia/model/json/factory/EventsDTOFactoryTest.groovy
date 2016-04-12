@@ -1,30 +1,28 @@
-package pl.jug.torun.xenia.service
+package pl.jug.torun.xenia.model.json.factory
 
-import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.Event
 import pl.jug.torun.xenia.model.Prize
 import pl.jug.torun.xenia.model.json.EventDTO
-import pl.jug.torun.xenia.model.json.factory.EventDTOFactory
 import spock.lang.Specification
 
 /**
- * Created by Lukasz on 2016-04-02.
+ * Created by lsaw on 4/12/16.
  */
-class ExportEventsServiceTest extends Specification {
+class EventsDTOFactoryTest extends Specification {
 
-    EventRepository eventRepository = Mock(EventRepository)
     PrizeRepository prizeRepository = Mock(PrizeRepository)
+
     EventDTOFactory eventDTOFactory = Mock(EventDTOFactory)
 
-    ExportEventsService exportEventService = new ExportEventsService(eventRepository, prizeRepository, eventDTOFactory)
+    EventsDTOFactory eventsDTOFactory = new EventsDTOFactory(eventDTOFactory, prizeRepository)
 
     def "should contain all events in the export result"() {
         given:
-            eventRepository.findAll() >> [new Event(meetupId: 12345), new Event(meetupId: 67890)]
+            def eventsList = [new Event(meetupId: 12345), new Event(meetupId: 67890)]
             eventDTOFactory.factorize(_) >> { Event arg -> new EventDTO(meetupId: arg.meetupId) }
         when:
-            def expected = exportEventService.exportAllEvents()
+            def expected = eventsDTOFactory.factorize(eventsList)
         then:
             expected.events.size() == 2
             expected.events[0].meetupId == "12345"
@@ -38,7 +36,7 @@ class ExportEventsServiceTest extends Specification {
                     new Prize(name: "VI Enterprise", producer: "VI Producer", id: 666, sponsorName: "VI Sponsor", imageUrl: "http://vient.com/logo.png")
             ]
         when:
-            def expected = exportEventService.exportAllEvents()
+            def expected = eventsDTOFactory.factorize([])
         then:
             expected.prizes.size() == 2
 

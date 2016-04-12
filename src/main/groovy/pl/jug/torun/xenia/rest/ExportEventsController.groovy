@@ -9,7 +9,7 @@ import pl.jug.torun.xenia.model.json.EventsDTO
  */
 @RestController
 @RequestMapping("/export")
-class ExportController {
+class ExportEventsController {
 
 
     EventsDTO exportEvents(){
