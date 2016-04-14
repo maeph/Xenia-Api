@@ -17,7 +17,7 @@ class EventDTOFactoryTest extends Specification {
 
     def "should create event DTO"() {
         given:
-            Event event = new Event(
+            def event = new Event(
                     meetupId: 1234,
                     giveAways: [
                             new GiveAway(prize: new Prize(id: "12345")),
