@@ -8,7 +8,6 @@ import javax.persistence.*
 @Entity
 class Prize {
 
-
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(columnDefinition = "char(32)")
