@@ -20,7 +20,7 @@ class ImportEventsController {
     ImportEventsService importService
 
     @RequestMapping(method = RequestMethod.POST, consumes = ["application/json"])
-    void putEvents(@RequestBody EventsDTO request) {
+    void importEvents(@RequestBody EventsDTO request) {
         importService.importEvents(request)
     }
 }
