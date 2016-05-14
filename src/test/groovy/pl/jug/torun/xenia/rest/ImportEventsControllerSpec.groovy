@@ -1,18 +1,17 @@
 package pl.jug.torun.xenia.rest
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.joda.time.LocalDateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import pl.jug.torun.xenia.Application
+import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.json.EventsDTO
 import spock.lang.Specification
 
-/**
- * Created by piotr on 14.05.16.
- */
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
 @IntegrationTest
 class ImportEventsControllerSpec extends Specification {
@@ -22,6 +21,9 @@ class ImportEventsControllerSpec extends Specification {
 
     @Autowired
     PrizeRepository prizeRepository
+
+    @Autowired
+    EventRepository eventRepository
 
     def "should import an empty list" () {
         given:
@@ -38,7 +40,8 @@ class ImportEventsControllerSpec extends Specification {
                     {"id": "666-777-888", "name": "Prize1", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img1.png"},
                     {"id": "888-777-666", "name": "Prize2", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img2.png"}
                 ],
-                "events":[]}'''
+                "events":[]
+                }'''
             )
         when:
             importEventsController.importEvents(events)
@@ -57,10 +60,25 @@ class ImportEventsControllerSpec extends Specification {
             }
     }
 
+    def "should import events"() {
+        given:
+            def eventsDTO = convertJSONtoDTO("""{
+                "prizes": [],
+                "events": [
+                    {"meetupId": 11111, "giveaways": []},
+                    {"meetupId": 22222, "giveaways": []},
+                    {"meetupId": 33333, "giveaways": []}
+                ]
+            }""")
+        when:
+            importEventsController.importEvents(eventsDTO)
+        then:
+            eventRepository.findAll().size() == 3
+    }
+
+
     private EventsDTO convertJSONtoDTO(String json) {
         ObjectMapper mapper = new ObjectMapper()
         return mapper.readValue(json, EventsDTO.class)
-
     }
-
 }
