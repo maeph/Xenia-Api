@@ -1,19 +1,15 @@
 package pl.jug.torun.xenia.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.PrePersist
-/**
- * Created by mephi_000 on 06.09.14.
- */
+import javax.persistence.*
+
+
 @Entity
 class Prize {
 
     @Id
     String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String name
 
     @Column(nullable = true)
