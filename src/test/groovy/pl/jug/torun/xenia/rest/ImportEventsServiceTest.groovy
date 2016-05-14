@@ -6,9 +6,7 @@ import pl.jug.torun.xenia.model.json.EventsDTO
 import pl.jug.torun.xenia.model.json.PrizeDTO
 import spock.lang.Specification
 
-/**
- * Created by piotr on 02.04.16.
- */
+
 class ImportEventsServiceTest extends Specification {
 
     PrizeRepository prizeRepository = Mock(PrizeRepository)
