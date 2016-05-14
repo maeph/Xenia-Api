@@ -33,7 +33,7 @@ public class PrizeController {
         }
 
         Prize prize = request.toPrize()
-        prize = prizeRepository.save(prize)
+        prize = prizeRepository.saveAndFlush(prize)
         return [resourceUrl: "/prize/${prize?.id}".toString()]
     }
     
