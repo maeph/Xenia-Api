@@ -233,7 +233,5 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             sponsorName: 'corpo3'
                     )
             ]
-
-            eventsDTO.events.size() == 1
     }
 }
