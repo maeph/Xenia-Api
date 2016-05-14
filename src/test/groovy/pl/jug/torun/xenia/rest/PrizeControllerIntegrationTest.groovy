@@ -16,7 +16,9 @@ import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.Prize
 import pl.jug.torun.xenia.rest.dto.PrizeRequest
 import pl.jug.torun.xenia.rest.dto.PrizeResponse
+import spock.lang.AutoCleanup
 
+import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -26,6 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat
 @IntegrationTest
 @Transactional
 class PrizeControllerIntegrationTest  {
+
+
+    @Autowired
+    EntityManager entityManager
 
     @Autowired
     PrizeController prizeController
@@ -42,7 +48,7 @@ class PrizeControllerIntegrationTest  {
     }
 
     // FIXME: this test is now RED since the Prize ID changed to String. Previously, it worked when the ID was just long.
-    @Ignore
+//    @Ignore
     @Test(expected = DataIntegrityViolationException.class)
     void shouldThrowAnExceptionIfPrizeWithNullNameIsTryingToBeAdded() {
         prizeController.create(new PrizeRequest(null, 'lorem', 'ipsum', null))
