@@ -1,13 +1,19 @@
 package pl.jug.torun.xenia.model
 
+import org.hibernate.annotations.GenericGenerator
+
 import javax.persistence.*
 
 
 @Entity
 class Prize {
 
+
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(columnDefinition = "char(32)")
     @Id
-    String id;
+    String id
 
     @Column(nullable = false, unique = true)
     String name
@@ -21,10 +27,4 @@ class Prize {
     @Column(nullable = true)
     String sponsorName
 
-    @PrePersist
-    void initializeId() {
-        if (id == null) {
-            id = UUID.randomUUID()
-        }
-    }
 }
