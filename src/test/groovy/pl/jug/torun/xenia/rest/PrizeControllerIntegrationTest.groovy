@@ -1,8 +1,6 @@
 package pl.jug.torun.xenia.rest
-
 import org.assertj.core.api.Condition
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,7 +14,6 @@ import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.Prize
 import pl.jug.torun.xenia.rest.dto.PrizeRequest
 import pl.jug.torun.xenia.rest.dto.PrizeResponse
-import spock.lang.AutoCleanup
 
 import javax.persistence.EntityManager
 import javax.transaction.Transactional

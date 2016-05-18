@@ -27,7 +27,7 @@ class EventsDTOFactory {
         def prizeList = prizeRepository.findAll()
         def prizeDTOs = prizeList.collect {
             new PrizeDTO(
-                    id: it.id,
+                    uuid: it.uuid,
                     name: it.name,
                     producer: it.producer,
                     imageUrl: it.imageUrl,

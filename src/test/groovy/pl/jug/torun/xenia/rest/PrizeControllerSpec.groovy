@@ -33,7 +33,7 @@ class PrizeControllerSpec  {
     protected MockMvc request
     @Autowired
     protected PrizeRepository prizeRepository
-    
+
     @Before
     void setup() {
         if (request == null) {
@@ -82,45 +82,45 @@ class PrizeControllerSpec  {
         //given:
         Prize prize = prizeRepository.save(new Prize(name: 'updateTest',producer:'Microsoft'))
         String json = '{"name":"updateTestUpdated"}'
-        
+
         //when:
         def response = request.perform(put("/prize/${prize.id}").contentType(MediaType.APPLICATION_JSON).content(json))
-        
+
         //then:
         response.andExpect(status().isOk())
                 .andExpect(jsonPath('$.name', is(equalTo('updateTestUpdated'))))
-                .andExpect(jsonPath('$.id', is(equalTo(prize.id as String))))
+                .andExpect(jsonPath('$.id', is(equalTo(prize.id as int))))
                 .andExpect(jsonPath('$.producer', is(equalTo('Microsoft'))))
     }
-    
+
     @Test
     void shouldNotAllowToUseNameThatIsAlreadyUsed(){
         //given:
         Prize prize1 = prizeRepository.save(new Prize(name: 'prize1',producer:'Microsoft'))
         prizeRepository.save(new Prize(name: 'prize2',producer:'Microsoft'))
         String json = '{"name":"prize2"}'
-        
+
         //when:
         def response = request.perform(put("/prize/${prize1.id}").contentType(MediaType.APPLICATION_JSON).content(json))
-        
+
         //then:
         response.andExpect(status().isBadRequest())
-    } 
-    
+    }
+
     @Test
     void shouldAllowUseTheSameNameWhileUpdatingProducer(){
         //given:
         Prize prize = prizeRepository.save(new Prize(name: 'prize4',producer:'Microsoft'))
-      
+
         String json = '{"name":"prize4","producer":"Google"}'
-        
+
         //when:
         def response = request.perform(put("/prize/${prize.id}").contentType(MediaType.APPLICATION_JSON).content(json))
-        
+
         //then:
         response.andExpect(status().isOk())
                 .andExpect(jsonPath('$.name', is(equalTo('prize4'))))
-                .andExpect(jsonPath('$.id', is(equalTo(prize.id as String))))
+                .andExpect(jsonPath('$.id', is(equalTo(prize.id as int))))
                 .andExpect(jsonPath('$.producer', is(equalTo('Google'))))
-    } 
+    }
 }

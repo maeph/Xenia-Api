@@ -1,11 +1,9 @@
 package pl.jug.torun.xenia.model
-
 import org.hibernate.annotations.Type
 import org.joda.time.LocalDateTime
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 
-import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -13,7 +11,6 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
-
 /**
  * Created by mephi_000 on 06.09.14.
  */
@@ -25,13 +22,13 @@ class Event {
 
     @Column(nullable = false)
     Long meetupId
-    
+
     @Column(nullable = false)
     String title
 
     @OneToMany
     List<GiveAway> giveAways
-    
+
     @ManyToMany
     List<Member> attendees
 
@@ -63,5 +60,5 @@ class Event {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
-    
+
 }

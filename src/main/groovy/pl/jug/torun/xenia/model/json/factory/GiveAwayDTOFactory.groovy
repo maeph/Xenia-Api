@@ -20,7 +20,7 @@ class GiveAwayDTOFactory {
             drawDTOFactory.factorize(it)
         }
         new GiveAwayDTO(
-                prizeId: giveAway.prize.id,
+                prizeUuid: giveAway.prize.uuid,
                 amount: giveAway.amount,
                 draws: drawDTOs)
     }

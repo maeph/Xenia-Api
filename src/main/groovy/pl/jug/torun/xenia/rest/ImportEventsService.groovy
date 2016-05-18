@@ -15,7 +15,7 @@ class ImportEventsService {
 
     void importEvents(EventsDTO eventsDTO) {
         prizeRepository.save(eventsDTO.prizes.collect {
-            new Prize(id: it.id, name: it.name, producer: it.producer, sponsorName: it.sponsorName, imageUrl: it.imageUrl)
+            new Prize(uuid: it.uuid, name: it.name, producer: it.producer, sponsorName: it.sponsorName, imageUrl: it.imageUrl)
         })
     }
 

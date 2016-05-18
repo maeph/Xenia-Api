@@ -20,15 +20,15 @@ class EventDTOFactoryTest extends Specification {
             def event = new Event(
                     meetupId: 1234,
                     giveAways: [
-                            new GiveAway(prize: new Prize(id: "12345")),
-                            new GiveAway(prize: new Prize(id: "67890"))
+                            new GiveAway(prize: new Prize(uuid: "12345")),
+                            new GiveAway(prize: new Prize(uuid: "67890"))
                     ])
-            giveAwayDTOFactory.factorize(_) >> { GiveAway arg -> new GiveAwayDTO(prizeId: arg.prize.id) }
+            giveAwayDTOFactory.factorize(_) >> { GiveAway arg -> new GiveAwayDTO(prizeUuid: arg.prize.uuid) }
         when:
             def expected = eventDTOFactory.factorize(event)
         then:
             expected.meetupId == "1234"
-            expected.giveaways[0].prizeId == "12345"
-            expected.giveaways[1].prizeId == "67890"
+            expected.giveaways[0].prizeUuid == "12345"
+            expected.giveaways[1].prizeUuid == "67890"
     }
 }
