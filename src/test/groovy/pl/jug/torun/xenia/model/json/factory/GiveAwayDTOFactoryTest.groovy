@@ -13,11 +13,11 @@ class GiveAwayDTOFactoryTest extends Specification {
 
     def "should create giveaway DTO"() {
         given:
-            def giveAway = new GiveAway(prize: new Prize(id: "12345"), amount: 3)
+            def giveAway = new GiveAway(prize: new Prize(uuid: "12345"), amount: 3)
         when:
             def expected = giveAwayDTOFactory.factorize(giveAway)
         then:
-            expected.prizeId == "12345"
+            expected.prizeUuid == "12345"
             expected.amount == 3
     }
 }

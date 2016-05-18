@@ -19,7 +19,7 @@ public class PrizeController {
     PrizeRepository prizeRepository
 
     @RequestMapping(value = '/{id}', method = RequestMethod.GET)
-    PrizeResponse get(@PathVariable('id') String id) {
+    PrizeResponse get(@PathVariable('id') long id) {
         Prize prize = prizeRepository.getOne(id)
         return new PrizeResponse(prize)
     }
@@ -36,20 +36,20 @@ public class PrizeController {
         prize = prizeRepository.saveAndFlush(prize)
         return [resourceUrl: "/prize/${prize?.id}".toString()]
     }
-    
+
     @RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = ['application/json'])
-    Prize update(@PathVariable('id') String id, @RequestBody PrizeRequest request){
+    Prize update(@PathVariable('id') long id, @RequestBody PrizeRequest request){
         Prize prize = prizeRepository.findOne(id)
-        
+
         if (prizeRepository.countByNameAndIdNot(request.name,id) > 0) {
             throw new IllegalArgumentException("Prize with name '${request.name}' already exists")
         }
-        
+
         prize.name = request.name ?: prize.name
         prize.producer = request.producer ?: prize.producer
         prize.imageUrl = request.imageUrl ?: prize.imageUrl
         prize.sponsorName = request.sponsorName ?: prize.sponsorName
-        
+
         return prizeRepository.save(prize)
     }
 
@@ -60,6 +60,6 @@ public class PrizeController {
                 message: e.message
         ]
     }
-    
-    
+
+
 }

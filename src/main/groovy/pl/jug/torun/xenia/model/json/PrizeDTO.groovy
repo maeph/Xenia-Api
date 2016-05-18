@@ -1,8 +1,7 @@
 package pl.jug.torun.xenia.model.json
 
-
 class PrizeDTO {
-    String id
+    String uuid
     String name
     String producer
     String sponsorName

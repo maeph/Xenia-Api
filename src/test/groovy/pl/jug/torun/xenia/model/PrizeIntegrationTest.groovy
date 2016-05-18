@@ -28,6 +28,7 @@ class PrizeIntegrationTest {
         //when:
         Prize persistedPrize = prizeRepository.save(prize)
         //then:
-        assertThat(persistedPrize.id).isNotEmpty()
+        assertThat(persistedPrize.id).isNotNull()
+        assertThat(persistedPrize.uuid).isNotNull()
     }
 }

@@ -1,6 +1,7 @@
 package pl.jug.torun.xenia.rest
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import pl.jug.torun.xenia.model.json.EventsDTO
@@ -22,7 +23,7 @@ class ExportEventsController {
         this.exportEventsService = exportEventsService
     }
 
-    @RequestMapping(method = GET)
+    @RequestMapping(method = GET, produces = [MediaType.APPLICATION_JSON_VALUE])
     EventsDTO exportEvents() {
         exportEventsService.exportAllEvents()
     }

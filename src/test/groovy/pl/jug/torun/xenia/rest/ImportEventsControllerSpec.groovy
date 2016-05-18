@@ -1,7 +1,5 @@
 package pl.jug.torun.xenia.rest
-
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.joda.time.LocalDateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
@@ -10,6 +8,7 @@ import pl.jug.torun.xenia.Application
 import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.json.EventsDTO
+import spock.lang.Ignore
 import spock.lang.Specification
 
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
@@ -60,6 +59,7 @@ class ImportEventsControllerSpec extends Specification {
             }
     }
 
+    @Ignore ('Work in progress')
     def "should import events"() {
         given:
             def eventsDTO = convertJSONtoDTO("""{
