@@ -6,6 +6,7 @@ import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import pl.jug.torun.xenia.dao.DrawRepository
 import pl.jug.torun.xenia.dao.EventRepository
+import pl.jug.torun.xenia.dao.GiveAwayRepository
 import pl.jug.torun.xenia.dao.MeetupMemberRepository
 import pl.jug.torun.xenia.dao.MemberRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
@@ -32,6 +33,9 @@ class IntegrationSpecification extends Specification {
 
     @Autowired
     EventRepository eventRepository
+
+    @Autowired
+    GiveAwayRepository giveAwayRepository
 
     def setup() {
         eventRepository.deleteAll()

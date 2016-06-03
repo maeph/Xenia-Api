@@ -1,4 +1,5 @@
 package pl.jug.torun.xenia.rest
+
 import org.joda.time.LocalDateTime
 import org.springframework.beans.factory.annotation.Autowired
 import pl.jug.torun.xenia.IntegrationSpecification
@@ -73,30 +74,33 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             sponsorName: 'corpo3'
                     )
             )
-
+            def ebookDraws = [
+                    new Draw(
+                            drawDate: yesterday,
+                            confirmed: true,
+                            attendee: janKowalski.member
+                    ),
+                    new Draw(
+                            drawDate: yesterday,
+                            confirmed: false,
+                            attendee: janNowak.member
+                    )
+            ]
+            drawRepository.save(ebookDraws)
+            def ebookGiveAways = [
+                    new GiveAway(
+                            amount: 2,
+                            prize: ebook,
+                            draws: ebookDraws
+                    )
+            ]
+            giveAwayRepository.save(ebookGiveAways)
             eventRepository.save(
                     new Event(
                             title: 'First event',
                             meetupId: 201L,
                             updatedAt: yesterday,
-                            giveAways: [
-                                    new GiveAway(
-                                            amount: 2,
-                                            prize: ebook,
-                                            draws: [
-                                                    new Draw(
-                                                            drawDate: yesterday,
-                                                            confirmed: true,
-                                                            attendee: janKowalski.member
-                                                    ),
-                                                    new Draw(
-                                                            drawDate: yesterday,
-                                                            confirmed: false,
-                                                            attendee: janNowak.member
-                                                    )
-                                            ]
-                                    )
-                            ]
+                            giveAways: ebookGiveAways
                     )
             )
             eventRepository.save(
@@ -106,35 +110,37 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             updatedAt: now
                     )
             )
+
+            def ideDraw = new Draw(
+                    drawDate: now,
+                    confirmed: true,
+                    attendee: janPolak.member
+            )
+            def analysisToolDraw = new Draw(
+                    drawDate: now,
+                    confirmed: true,
+                    attendee: janKowalski.member
+            )
+            drawRepository.save([ideDraw, analysisToolDraw])
+            def firstEventGiveAways = [
+                    new GiveAway(
+                            amount: 1,
+                            prize: ideLicense,
+                            draws: [ideDraw]
+                    ),
+                    new GiveAway(
+                            amount: 1,
+                            prize: analysisToolLicense,
+                            draws: [analysisToolDraw]
+                    )
+            ]
+            giveAwayRepository.save(firstEventGiveAways)
             eventRepository.save(
                     new Event(
                             title: 'First event',
                             meetupId: 203L,
                             updatedAt: now,
-                            giveAways: [
-                                    new GiveAway(
-                                            amount: 1,
-                                            prize: ideLicense,
-                                            draws: [
-                                                    new Draw(
-                                                            drawDate: now,
-                                                            confirmed: true,
-                                                            attendee: janPolak.member
-                                                    )
-                                            ]
-                                    ),
-                                    new GiveAway(
-                                            amount: 1,
-                                            prize: analysisToolLicense,
-                                            draws: [
-                                                    new Draw(
-                                                            drawDate: now,
-                                                            confirmed: true,
-                                                            attendee: janPolak.member
-                                                    )
-                                            ]
-                                    )
-                            ]
+                            giveAways: firstEventGiveAways
                     )
             )
 
@@ -189,7 +195,7 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                                                     new DrawDTO(
                                                             drawDate: now,
                                                             confirmed: true,
-                                                            meetupMemberId: janPolak.id
+                                                            meetupMemberId: janKowalski.id
                                                     )
                                             ]
                                     )
