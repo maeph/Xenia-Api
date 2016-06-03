@@ -36,8 +36,8 @@ class ImportEventsControllerSpec extends Specification {
         given:
             def events = convertJSONtoDTO('''{
                 "prizes":[
-                    {"id": "666-777-888", "name": "Prize1", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img1.png"},
-                    {"id": "888-777-666", "name": "Prize2", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img2.png"}
+                    {"uuid": "666-777-888", "name": "Prize1", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img1.png"},
+                    {"uuid": "888-777-666", "name": "Prize2", "producer": "JUG", "sponsorName": "JUG", "imageUrl": "http://example.com/img2.png"}
                 ],
                 "events":[]
                 }'''
@@ -45,13 +45,13 @@ class ImportEventsControllerSpec extends Specification {
         when:
             importEventsController.importEvents(events)
         then:
-            prizeRepository.findOne('666-777-888').every {
+            prizeRepository.findByUuid('666-777-888').every {
                 it.name == 'Prize1'
                 it.producer == 'JUG'
                 it.sponsorName == 'JUG'
                 it.imageUrl == 'http://example.com/img1.png'
             }
-            prizeRepository.findOne('888-777-666').every {
+            prizeRepository.findByUuid('888-777-666').every {
                 it.name == 'Prize2'
                 it.producer == 'JUG'
                 it.sponsorName == 'JUG'

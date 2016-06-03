@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
 @IntegrationTest
 @Transactional
-class PrizeControllerIntegrationTest  {
+class PrizeControllerIntegrationTest {
 
 
     @Autowired
@@ -44,8 +44,6 @@ class PrizeControllerIntegrationTest  {
         existingPrize = prizeRepository.save(new Prize(name: 'Istniejaca nagroda', producer: 'Zbyszko', sponsorName: 'Szymon'))
     }
 
-    // FIXME: this test is now RED since the Prize ID changed to String. Previously, it worked when the ID was just long.
-//    @Ignore
     @Test(expected = DataIntegrityViolationException.class)
     void shouldThrowAnExceptionIfPrizeWithNullNameIsTryingToBeAdded() {
         prizeController.create(new PrizeRequest(null, 'lorem', 'ipsum', null))

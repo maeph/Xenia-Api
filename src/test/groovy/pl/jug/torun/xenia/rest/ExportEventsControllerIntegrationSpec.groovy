@@ -162,7 +162,7 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             giveaways: [
                                     new GiveAwayDTO(
                                             amount: 2,
-                                            prizeId: ebook.id,
+                                            prizeUuid: ebook.uuid,
                                             draws: [
                                                     new DrawDTO(
                                                             drawDate: yesterday,
@@ -187,7 +187,7 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             giveaways: [
                                     new GiveAwayDTO(
                                             amount: 1,
-                                            prizeId: ideLicense.id,
+                                            prizeUuid: ideLicense.uuid,
                                             draws: [
                                                     new DrawDTO(
                                                             drawDate: now,
@@ -198,7 +198,7 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                                     ),
                                     new GiveAwayDTO(
                                             amount: 1,
-                                            prizeId: analysisToolLicense.id,
+                                            prizeUuid: analysisToolLicense.uuid,
                                             draws: [
                                                     new DrawDTO(
                                                             drawDate: now,
@@ -212,21 +212,21 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
             ]
             eventsDTO.prizes == [
                     new PrizeDTO(
-                            id: ebook.id,
+                            uuid: ebook.uuid,
                             name: 'Spring in Action',
                             producer: 'O-Relly',
                             imageUrl: 'http://peekasa.com/image301',
                             sponsorName: 'corpo1'
                     ),
                     new PrizeDTO(
-                            id: ideLicense.id,
+                            uuid: ideLicense.uuid,
                             name: 'The only right IDE',
                             producer: 'producer1',
                             imageUrl: 'http://peekasa.com/image302',
                             sponsorName: 'corpo2'
                     ),
                     new PrizeDTO(
-                            id: analysisToolLicense.id,
+                            uuid: analysisToolLicense.uuid,
                             name: 'JAnalisiTool',
                             producer: 'producer2',
                             imageUrl: 'http://peekasa.com/image303',
