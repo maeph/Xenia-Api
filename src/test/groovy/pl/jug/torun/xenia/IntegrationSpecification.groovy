@@ -11,8 +11,11 @@ import pl.jug.torun.xenia.dao.MemberRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
 import spock.lang.Specification
 
+import javax.transaction.Transactional
+
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
 @IntegrationTest
+@Transactional
 class IntegrationSpecification extends Specification {
 
     @Autowired

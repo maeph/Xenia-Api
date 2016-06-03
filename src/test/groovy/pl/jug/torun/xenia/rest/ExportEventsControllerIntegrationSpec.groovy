@@ -1,12 +1,7 @@
 package pl.jug.torun.xenia.rest
-
 import org.joda.time.LocalDateTime
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.transaction.annotation.Transactional
 import pl.jug.torun.xenia.IntegrationSpecification
-import pl.jug.torun.xenia.dao.EventRepository
-import pl.jug.torun.xenia.dao.MeetupMemberRepository
-import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.Draw
 import pl.jug.torun.xenia.model.Event
 import pl.jug.torun.xenia.model.GiveAway
@@ -21,18 +16,8 @@ import pl.jug.torun.xenia.model.meetup.MeetupMember
 class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
 
     @Autowired
-    MeetupMemberRepository meetupMemberRepository
-
-    @Autowired
-    EventRepository eventRepository
-
-    @Autowired
-    PrizeRepository prizeRepository
-
-    @Autowired
     ExportEventsController exportEventsController
 
-    @Transactional
     def 'should export a list of events'() {
         given:
             def now = LocalDateTime.now()
@@ -88,6 +73,7 @@ class ExportEventsControllerIntegrationSpec extends IntegrationSpecification {
                             sponsorName: 'corpo3'
                     )
             )
+
             eventRepository.save(
                     new Event(
                             title: 'First event',
