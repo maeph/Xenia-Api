@@ -9,11 +9,10 @@ import pl.jug.torun.xenia.model.Prize
 
 import javax.persistence.Entity
 
-/**
- * Created by mephi_000 on 06.09.14.
- */
+
 
 public interface EventRepository extends JpaRepository<Event, Long>{
+    Event findByMeetupId(Long meetupId)
 
 
 }

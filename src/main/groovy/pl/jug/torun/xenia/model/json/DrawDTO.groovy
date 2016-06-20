@@ -6,7 +6,7 @@ import groovy.transform.ToString
 @ToString
 @EqualsAndHashCode
 class DrawDTO {
-    String meetupMemberId
+    Long meetupMemberId
     String drawDate
     boolean confirmed
 }

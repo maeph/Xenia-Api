@@ -24,7 +24,25 @@ class ImportEventsServiceTest extends Specification {
                 def prizes = arguments[0] as List
                 assert prizes[0].properties == new Prize(uuid: "01", name: "Prize1", producer: "Producer1", sponsorName: "Sponsor1", imageUrl: "http://example.com/image1.png").properties
                 assert prizes[1].properties == new Prize(uuid: "02", name: "Prize2", producer: "Producer2", sponsorName: "Sponsor2", imageUrl: "http://example.com/image2.png").properties
+
             }
+    }
+
+    def "should write prizes to existing database"() {
+        given:
+        def examplePrizes = [new PrizeDTO(uuid: "01", name: "Prize1", producer: "Producer1", sponsorName: "Sponsor1", imageUrl: "http://example.com/image1.png"),
+                             new PrizeDTO(uuid: "02", name: "Prize2", producer: "Producer2", sponsorName: "Sponsor2", imageUrl: "http://example.com/image2.png")]
+
+        when:
+        importService.importEvents(new EventsDTO(prizes: examplePrizes))
+
+        then:
+        1 * prizeRepository.save(_) >> { arguments ->
+            def prizes = arguments[0] as List
+            assert prizes[0].properties == new Prize(uuid: "01", name: "Prize1", producer: "Producer1", sponsorName: "Sponsor1", imageUrl: "http://example.com/image1.png").properties
+            assert prizes[1].properties == new Prize(uuid: "02", name: "Prize2", producer: "Producer2", sponsorName: "Sponsor2", imageUrl: "http://example.com/image2.png").properties
+
+        }
     }
 
 }

@@ -6,9 +6,7 @@ import pl.jug.torun.xenia.service.EventsService
 import spock.lang.Specification
 
 import static pl.jug.torun.xenia.rest.EventsController.OK_RESPONSE
-/**
- * Created by mephi_000 on 06.09.14.
- */
+
 class EventsControllerTest extends Specification {
 
     EventsController controller
