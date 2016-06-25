@@ -60,7 +60,7 @@ class MeetupClient {
         Map params = [key: key, fields: 'id,name,time,duration,updated']
 
         HttpResponseDecorator response = request.get(
-                path: groupUrlName + '/3/events.json',
+                path: groupUrlName + '/events/' + id,
                 query: params,
                 contentType: 'application/json'
         ) as HttpResponseDecorator
