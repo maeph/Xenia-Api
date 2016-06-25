@@ -55,7 +55,7 @@ class MeetupClient {
         return response.data?.results?.collect { EventConverter.createFromJSON(it) }
     }
 
-    Event findOneByID(long id) {
+    Event findOneById(long id) {
         RESTClient request = new RESTClient(MEETUP_API_HOST)
         Map params = [key: key, fields: 'id,name,time,duration,updated']
 

@@ -33,7 +33,7 @@ class MeetupEventsService implements EventsService {
 
     @Override
     void refreshEvent(long id) {
-        Event remoteEvent = meetupClient.findOneByID(id)
+        Event remoteEvent = meetupClient.findOneById(id)
         Event existingEvent = eventRepository.findByMeetupId(id)
 
         if (remoteEvent && existingEvent && remoteEvent.meetupId == existingEvent.meetupId) {
