@@ -7,12 +7,22 @@ import pl.jug.torun.xenia.model.json.PrizeDTO
 import pl.jug.torun.xenia.service.EventsService
 import spock.lang.Specification
 
+import javax.validation.constraints.Null
+
 
 class ImportEventsServiceTest extends Specification {
 
     PrizeRepository prizeRepository = Mock(PrizeRepository)
     EventsService eventsService = Mock(EventsService)
     ImportEventsService importService = new ImportEventsService(prizeRepository: prizeRepository, eventsService: eventsService)
+
+    def "should fail on null prize"() {
+        when:
+            importService.importEvents(null)
+        then:
+            thrown NullPointerException
+            0 * prizeRepository.save(_)
+    }
 
     def "should write prizes to empty database"() {
         given:

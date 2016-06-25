@@ -7,18 +7,13 @@ import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import pl.jug.torun.xenia.Application
-import pl.jug.torun.xenia.IntegrationSpecification
 import pl.jug.torun.xenia.dao.DrawRepository
 import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.GiveAwayRepository
 import pl.jug.torun.xenia.dao.MeetupMemberRepository
-import pl.jug.torun.xenia.dao.MemberRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
-import pl.jug.torun.xenia.model.Draw
 import pl.jug.torun.xenia.model.Event
-import pl.jug.torun.xenia.model.GiveAway
 import pl.jug.torun.xenia.model.Member
-import pl.jug.torun.xenia.model.Prize
 import pl.jug.torun.xenia.model.json.EventsDTO
 import pl.jug.torun.xenia.model.meetup.MeetupMember
 import pl.jug.torun.xenia.service.EventsService
@@ -82,6 +77,9 @@ class ImportEventsControllerSpec extends Specification {
         eventRepository.save([EVENT1, EVENT2, EVENT3])
         meetupMemberRepository.save([MEETUP_MEMBER1, MEETUP_MEMBER2])
         importEventsController.importService.eventsService = eventsService //Wiremock?
+
+        giveAwayRepository.deleteAll()
+
     }
 
     def "should import an empty list" () {
