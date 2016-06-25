@@ -55,6 +55,19 @@ class MeetupClient {
         return response.data?.results?.collect { EventConverter.createFromJSON(it) }
     }
 
+    Event findOneByID(long id) {
+        RESTClient request = new RESTClient(MEETUP_API_HOST)
+        Map params = [key: key, fields: 'id,name,time,duration,updated']
+
+        HttpResponseDecorator response = request.get(
+                path: groupUrlName + '/3/events.json',
+                query: params,
+                contentType: 'application/json'
+        ) as HttpResponseDecorator
+
+        return  EventConverter.createFromJSON(response.data)
+    }
+
     List<MeetupMember> findAllAttendeesOfEvent(Long id) {
         RESTClient request = new RESTClient(MEETUP_API_HOST)
 
