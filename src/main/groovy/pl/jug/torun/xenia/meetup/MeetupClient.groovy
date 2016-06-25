@@ -44,15 +44,28 @@ class MeetupClient {
     List<Event> findAllEvents() {
         RESTClient request = new RESTClient(MEETUP_API_HOST)
 
-        Map params = [key: key, group_urlname: groupUrlName, status: 'upcoming,past']
+        Map params = [key: key, fields: 'id,name,time,duration,updated', status: 'upcoming,past']
 
         HttpResponseDecorator response = request.get(
-                path: '/2/events.json',
+                path: groupUrlName + '/events/',
                 query: params,
                 contentType: 'application/json'
         ) as HttpResponseDecorator
 
         return response.data?.results?.collect { EventConverter.createFromJSON(it) }
+    }
+
+    Event findOneById(long id) {
+        RESTClient request = new RESTClient(MEETUP_API_HOST)
+        Map params = [key: key, fields: 'id,name,time,duration,updated']
+
+        HttpResponseDecorator response = request.get(
+                path: groupUrlName + '/events/' + id,
+                query: params,
+                contentType: 'application/json'
+        ) as HttpResponseDecorator
+
+        return  EventConverter.createFromJSON(response.data)
     }
 
     List<MeetupMember> findAllAttendeesOfEvent(Long id) {
@@ -83,33 +96,33 @@ class MeetupClient {
                 body: params,
                 contentType: 'application/x-www-form-urlencoded'
         )
-       
+
     }
 
 
-        private static class EventConverter {
-            static Event createFromJSON(Map json) {
-                LocalDateTime startDate = new LocalDateTime(Long.valueOf(json?.time))
-                LocalDateTime lastUpdate = new LocalDateTime(Long.valueOf(json?.updated))
+    private static class EventConverter {
+        static Event createFromJSON(Map json) {
+            LocalDateTime startDate = new LocalDateTime(Long.valueOf(json?.time))
+            LocalDateTime lastUpdate = new LocalDateTime(Long.valueOf(json?.updated))
 
-                return new Event(
-                        title: json?.name,
-                        meetupId: json?.id as Long,
-                        startDate: startDate,
-                        endDate: json?.duration ? startDate.plusMillis(Integer.valueOf(json?.duration)) : startDate.plusHours(3),
-                        updatedAt: lastUpdate
-                )
-            }
-        }
-
-        private static class MemberConverter {
-            static MeetupMember createFromJSON(Map json) {
-                return new MeetupMember(id: json?.member?.member_id,
-                        member: new Member(
-                                displayName: json?.member?.name,
-                                photoUrl: json?.member_photo?.thumb_link
-                        )
-                )
-            }
+            return new Event(
+                    title: json?.name,
+                    meetupId: json?.id as Long,
+                    startDate: startDate,
+                    endDate: json?.duration ? startDate.plusMillis(Integer.valueOf(json?.duration)) : startDate.plusHours(3),
+                    updatedAt: lastUpdate
+            )
         }
     }
+
+    private static class MemberConverter {
+        static MeetupMember createFromJSON(Map json) {
+            return new MeetupMember(id: json?.member?.member_id,
+                    member: new Member(
+                            displayName: json?.member?.name,
+                            photoUrl: json?.member_photo?.thumb_link
+                    )
+            )
+        }
+    }
+}

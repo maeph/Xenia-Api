@@ -32,6 +32,18 @@ class MeetupEventsService implements EventsService {
     }
 
     @Override
+    void refreshEvent(long id) {
+        Event remoteEvent = meetupClient.findOneById(id)
+        Event existingEvent = eventRepository.findByMeetupId(id)
+
+        if (remoteEvent && existingEvent && remoteEvent.meetupId == existingEvent.meetupId) {
+            updateEvent(existingEvent, remoteEvent)
+        } else {
+            createNewEvent(remoteEvent)
+        }
+    }
+
+    @Override
     public void refreshEvents() {
         List<Event> events = meetupClient.findAllEvents()
         List<Event> existingEvents = this.findAll()
