@@ -87,29 +87,29 @@ class MeetupClient {
     }
 
 
-        private static class EventConverter {
-            static Event createFromJSON(Map json) {
-                LocalDateTime startDate = new LocalDateTime(Long.valueOf(json?.time))
-                LocalDateTime lastUpdate = new LocalDateTime(Long.valueOf(json?.updated))
+    private static class EventConverter {
+        static Event createFromJSON(Map json) {
+            LocalDateTime startDate = new LocalDateTime(Long.valueOf(json?.time))
+            LocalDateTime lastUpdate = new LocalDateTime(Long.valueOf(json?.updated))
 
-                return new Event(
-                        title: json?.name,
-                        meetupId: json?.id as Long,
-                        startDate: startDate,
-                        endDate: json?.duration ? startDate.plusMillis(Integer.valueOf(json?.duration)) : startDate.plusHours(3),
-                        updatedAt: lastUpdate
-                )
-            }
-        }
-
-        private static class MemberConverter {
-            static MeetupMember createFromJSON(Map json) {
-                return new MeetupMember(id: json?.member?.member_id,
-                        member: new Member(
-                                displayName: json?.member?.name,
-                                photoUrl: json?.member_photo?.thumb_link
-                        )
-                )
-            }
+            return new Event(
+                    title: json?.name,
+                    meetupId: json?.id as Long,
+                    startDate: startDate,
+                    endDate: json?.duration ? startDate.plusMillis(Integer.valueOf(json?.duration)) : startDate.plusHours(3),
+                    updatedAt: lastUpdate
+            )
         }
     }
+
+    private static class MemberConverter {
+        static MeetupMember createFromJSON(Map json) {
+            return new MeetupMember(id: json?.member?.member_id,
+                    member: new Member(
+                            displayName: json?.member?.name,
+                            photoUrl: json?.member_photo?.thumb_link
+                    )
+            )
+        }
+    }
+}
