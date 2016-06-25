@@ -27,7 +27,7 @@ class EventDTOFactoryTest extends Specification {
         when:
             def expected = eventDTOFactory.factorize(event)
         then:
-            expected.meetupId == "1234"
+            expected.meetupId == 1234
             expected.giveaways[0].prizeUuid == "12345"
             expected.giveaways[1].prizeUuid == "67890"
     }

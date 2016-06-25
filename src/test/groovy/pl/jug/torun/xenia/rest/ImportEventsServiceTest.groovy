@@ -4,13 +4,15 @@ import pl.jug.torun.xenia.dao.PrizeRepository
 import pl.jug.torun.xenia.model.Prize
 import pl.jug.torun.xenia.model.json.EventsDTO
 import pl.jug.torun.xenia.model.json.PrizeDTO
+import pl.jug.torun.xenia.service.EventsService
 import spock.lang.Specification
 
 
 class ImportEventsServiceTest extends Specification {
 
     PrizeRepository prizeRepository = Mock(PrizeRepository)
-    ImportEventsService importService = new ImportEventsService(prizeRepository: prizeRepository)
+    EventsService eventsService = Mock(EventsService)
+    ImportEventsService importService = new ImportEventsService(prizeRepository: prizeRepository, eventsService: eventsService)
 
     def "should write prizes to empty database"() {
         given:

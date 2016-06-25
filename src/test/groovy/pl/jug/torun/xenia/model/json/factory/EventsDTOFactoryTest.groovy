@@ -25,8 +25,8 @@ class EventsDTOFactoryTest extends Specification {
             def expected = eventsDTOFactory.factorize(eventsList)
         then:
             expected.events.size() == 2
-            expected.events[0].meetupId == '12345'
-            expected.events[1].meetupId == '67890'
+            expected.events[0].meetupId == 12345L
+            expected.events[1].meetupId == 67890L
     }
 
     def 'should contain all prizes in the export result'() {

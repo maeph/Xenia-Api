@@ -23,7 +23,7 @@ class DrawDTOFactoryTest extends Specification {
         when:
             def expected = factory.factorize(draw)
         then:
-            expected.meetupMemberId == '1000'
+            expected.meetupMemberId == 1000
             expected.drawDate == "2016-04-05T13:32:01.000"
             expected.confirmed
     }

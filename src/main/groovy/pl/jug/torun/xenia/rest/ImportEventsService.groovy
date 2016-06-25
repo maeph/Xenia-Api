@@ -42,7 +42,7 @@ class ImportEventsService {
 
         eventsService.refreshEvents()
 
-        eventsDTO.events.forEach {
+        eventsDTO?.events?.forEach {
 
             def event = eventRepository.findByMeetupId(it.meetupId)
             if (event != null) {
