@@ -123,7 +123,7 @@ class DrawService implements DrawServiceInterface {
         List<Member> memberWhoWonThePrize = (giveAwayRepository.findByPrize(giveAway.prize).draws.findAll {
             it.confirmed
         }).attendee.flatten()
-
+        //TODO czy ten warunek na pewno działa?
         return event.attendees - event.giveAways.draws.attendee.flatten() - memberWhoWonThePrize
 
     }

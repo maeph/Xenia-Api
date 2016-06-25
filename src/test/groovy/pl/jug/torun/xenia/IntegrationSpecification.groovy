@@ -17,7 +17,7 @@ import javax.transaction.Transactional
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
 @IntegrationTest
 @Transactional
-class IntegrationSpecification extends Specification {
+abstract class IntegrationSpecification extends Specification {
 
     @Autowired
     MemberRepository memberRepository

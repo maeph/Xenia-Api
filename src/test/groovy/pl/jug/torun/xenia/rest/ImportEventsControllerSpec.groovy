@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
+import org.springframework.transaction.annotation.Transactional
 import pl.jug.torun.xenia.Application
+import pl.jug.torun.xenia.IntegrationSpecification
 import pl.jug.torun.xenia.dao.DrawRepository
 import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.GiveAwayRepository
@@ -20,8 +22,7 @@ import pl.jug.torun.xenia.service.EventsService
 import spock.lang.Specification
 
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
-@IntegrationTest
-class ImportEventsControllerSpec extends Specification {
+class ImportEventsControllerSpec extends IntegrationSpecification {
 
 
     @Autowired
@@ -77,9 +78,6 @@ class ImportEventsControllerSpec extends Specification {
         eventRepository.save([EVENT1, EVENT2, EVENT3])
         meetupMemberRepository.save([MEETUP_MEMBER1, MEETUP_MEMBER2])
         importEventsController.importService.eventsService = eventsService //Wiremock?
-
-        giveAwayRepository.deleteAll()
-
     }
 
     def "should import an empty list" () {

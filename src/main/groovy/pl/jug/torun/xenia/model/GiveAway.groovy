@@ -22,6 +22,6 @@ class GiveAway {
     Prize prize
     @Column(nullable = false)
     int amount
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL )
     List<Draw> draws
 }
