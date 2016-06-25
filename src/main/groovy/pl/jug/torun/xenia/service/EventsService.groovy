@@ -16,6 +16,13 @@ interface EventsService {
      */
     public List<Event> findAll()
 
+
+    /**
+     * Refreshes single event from, possible, external source
+     */
+    public void refreshEvent(long id)
+
+
     /**
      * Refreshes events from, possible, external source
      */
