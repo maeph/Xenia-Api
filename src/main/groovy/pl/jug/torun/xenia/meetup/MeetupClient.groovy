@@ -44,10 +44,10 @@ class MeetupClient {
     List<Event> findAllEvents() {
         RESTClient request = new RESTClient(MEETUP_API_HOST)
 
-        Map params = [key: key, group_urlname: groupUrlName, status: 'upcoming,past']
+        Map params = [key: key, fields: 'id,name,time,duration,updated', status: 'upcoming,past']
 
         HttpResponseDecorator response = request.get(
-                path: '/2/events.json',
+                path: groupUrlName + '/events/',
                 query: params,
                 contentType: 'application/json'
         ) as HttpResponseDecorator
@@ -96,7 +96,7 @@ class MeetupClient {
                 body: params,
                 contentType: 'application/x-www-form-urlencoded'
         )
-       
+
     }
 
 
