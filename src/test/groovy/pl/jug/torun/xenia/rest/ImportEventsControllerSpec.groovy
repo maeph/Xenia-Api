@@ -14,6 +14,7 @@ import pl.jug.torun.xenia.dao.EventRepository
 import pl.jug.torun.xenia.dao.GiveAwayRepository
 import pl.jug.torun.xenia.dao.MeetupMemberRepository
 import pl.jug.torun.xenia.dao.PrizeRepository
+import pl.jug.torun.xenia.model.Draw
 import pl.jug.torun.xenia.model.Event
 import pl.jug.torun.xenia.model.Member
 import pl.jug.torun.xenia.model.json.EventsDTO
@@ -133,7 +134,6 @@ class ImportEventsControllerSpec extends IntegrationSpecification {
             eventRepository.findAll().size() == 3
     }
 
-    @Ignore //JPA Session not initialized
     def "should import events and prizes with give-aways"() {
         given:
             def eventsAndPrizes = convertJSONtoDTO('''{
@@ -154,20 +154,38 @@ class ImportEventsControllerSpec extends IntegrationSpecification {
         when:
             importEventsController.importEvents(eventsAndPrizes)
 
-        def giveAway = giveAwayRepository.findByPrize(prizeRepository.findByUuid('666-777-888')).first()
+        def event = eventRepository.findByMeetupId(EVENT1.meetupId)
         then:
-            giveAway.id == 1L
-            giveAway.draws.size() == 1
-            giveAway.draws.first().drawDate == LocalDateTime.parse("2016-06-20T19:55:53.251")
-            giveAway.draws.first().confirmed
+            event.giveAways.findAll {
+                def draw = it.draws.first()
+                it.prize.uuid == "666-777-888" &&
+                it.amount == 1 &&
+                it.draws.size() == 1 &&
+                draw.drawDate == LocalDateTime.parse("2016-06-20T19:55:53.251") &&
+                draw.confirmed &&
+                draw.attendee.id == 1L
+            }.size() == 1
 
+            prizeRepository.findAll().findAll {
+                it.uuid == "666-777-888" &&
+                it.name == "Prize1" &&
+                it.imageUrl == "http://example.com/img1.png" &&
+                it.producer == "JUG" &&
+                it.sponsorName == "JUG"
+            }.size() == 1
+        prizeRepository.findAll().findAll {
+                it.uuid == "888-777-666" &&
+                it.name == "Prize2" &&
+                it.imageUrl == "http://example.com/img2.png" &&
+                it.producer == "JUG" &&
+                it.sponsorName == "JUG"
+            }.size() == 1
 
-        def one = meetupMemberRepository.getOne(1L)
-        def id = one.member.id
-        drawRepository.getOne(giveAway.draws.first().id).attendee.id == id
     }
 
+    def "should not import data when importing nonexistent meetup event id"() {
 
+    }
     private static EventsDTO convertJSONtoDTO(String json) {
         ObjectMapper mapper = new ObjectMapper()
         return mapper.readValue(json, EventsDTO.class)
